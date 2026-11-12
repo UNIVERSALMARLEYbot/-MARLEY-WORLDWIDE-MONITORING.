@@ -1,0 +1,16 @@
+MARLEY MONITORING WORLDWIDE — MISE EN LIGNE
+
+1. Décompresser marley-monitoring-worldwide-v1.zip.
+2. Créer un compte GitHub : https://github.com
+3. Créer un dépôt, puis importer TOUS les fichiers et dossiers contenus dans le dossier.
+   IMPORTANT : index.html, package.json, src/, api/, public/, etc. doivent être à la RACINE du dépôt.
+   Pour un import depuis un ordinateur avec Git, voir README.md.
+4. Aller sur https://vercel.com/new et se connecter avec GitHub.
+5. Importer le dépôt. Vercel détecte Vite et crée les fonctions /api.
+6. Cliquer sur Deploy. Le site obtient une adresse https://...vercel.app.
+7. Vérifier les URLs /api/events, /api/news?category=news et /api/crypto.
+8. Sur iPhone : Safari > Partager > Sur l'écran d'accueil.
+
+NOTES : La démo ne contient aucun cours ni événement fictif. Les API externes peuvent être limitées ou indisponibles.
+La compilation Vite n'a pas pu être exécutée localement dans l'environnement de génération (installation NPM inaccessible).
+Les scripts Node ont passé la vérification syntaxique et les modules API ont été importés.

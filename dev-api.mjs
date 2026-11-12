@@ -1,0 +1,3 @@
+import {createServer} from 'node:http';
+const names=new Set(['events','news','crypto','forex','stocks']);
+createServer(async (req,res)=>{const url=new URL(req.url,'http://localhost');const name=url.pathname.replace(/^\/api\//,'');if(!names.has(name)) {res.statusCode=404;return res.end('Not found')};res.setHeader('Access-Control-Allow-Origin','http://localhost:5173');req.query=Object.fromEntries(url.searchParams);try{const module=await import(`./api/${name}.js`);await module.default(req,res)}catch(e){console.error(e);res.statusCode=500;res.end(JSON.stringify({ok:false,error:'Erreur serveur'}))}}).listen(3001,'127.0.0.1',()=>console.log('Marley API locale: http://localhost:3001'));
