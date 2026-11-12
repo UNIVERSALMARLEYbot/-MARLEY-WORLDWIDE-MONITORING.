@@ -1,0 +1,5 @@
+import {done,getText,fail} from './_lib.js';
+// Daily market values are delayed and never represented as live quotes.
+const symbols=[['S&P 500','^spx'],['Nasdaq 100','^ndq'],['Dow Jones','^dji'],['DAX','^dax'],['CAC 40','^cac'],['Nikkei 225','^nkx'],['FTSE 100','^ukx']];
+async function fetchOne([name,ticker]){try{const csv=await getText(`https://stooq.com/q/l/?s=${encodeURIComponent(ticker)}&f=sd2t2ohlcv&h&e=csv`);const row=csv.trim().split('\n')[1]?.split(',');if(!row||row.length<7||row[1]==='N/D')return null;const price=Number(row[6]);if(!Number.isFinite(price)||price<=0)return null;return {name,ticker,date:row[1],price,currency:'index',delay:'Fin de séance / différé'};}catch{return null;}}
+export default async function handler(req,res){try{const items=(await Promise.all(symbols.map(fetchOne))).filter(Boolean);if(!items.length)throw Error('Stooq inaccessible ou symboles non reconnus');done(res,200,{ok:true,items,source:'Stooq (cours indicatifs différés)',updatedAt:new Date().toISOString(),warning:'Données différées, non destinées à l’exécution d’ordres.'},900);}catch(e){fail(res,'Stooq',e)}}
